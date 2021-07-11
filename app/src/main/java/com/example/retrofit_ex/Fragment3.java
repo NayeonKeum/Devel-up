@@ -12,15 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.RequiresApi;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,26 +25,25 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 
 public class Fragment3 extends Fragment{
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://172.10.18.137:80";
     String name;
-
     TextView allpost;
     Button showBtn, deleteBtn,updateBtn;
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent= getActivity().getIntent();
         name=intent.getStringExtra("name");
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -55,12 +51,10 @@ public class Fragment3 extends Fragment{
         retrofitInterface = retrofit.create(RetrofitInterface.class);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_3, container, false);
         return view;
     }
@@ -88,8 +82,6 @@ public class Fragment3 extends Fragment{
             }
         });
 
-
-
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +105,21 @@ public class Fragment3 extends Fragment{
                             try {
                                 String jsonString= response.body().string();
                                 List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>(){}.getType());
-                                allpost.setText(list.get(0).getTitle());
+                                //allpost.setText(list.toString());
+                                ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>();
+                                for (int i=0;i<list.size();i++){
+                                    Postlist.add(new PostInfo(list.get(i).getName(),list.get(i).getTitle(),list.get(i).getContent()));
+                                }
+                                String total="";
+                                for (int i=0;i<Postlist.size();i++){
+                                    total+="name : "+Postlist.get(i).getName()+"\n"
+                                            +"title : "+Postlist.get(i).getTitle()+"\n"
+                                            +"content : "+Postlist.get(i).getContent()+"\n\n";
+                                }
+                                allpost.setText(total);
+
+
+
 
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -200,8 +206,6 @@ public class Fragment3 extends Fragment{
                 });
             }
         });
-
-
     }
 
     private void DeletePost() {
@@ -248,7 +252,6 @@ public class Fragment3 extends Fragment{
 
             }
         });
-
 
     }
 }

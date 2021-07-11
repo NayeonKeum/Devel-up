@@ -3,6 +3,13 @@ package com.example.retrofit_ex;
 public class PostInfo {
     private int __v;
     private String name, title, content, _id;
+    public PostInfo(){}
+    public PostInfo(String name, String title, String content){
+        this.name=name;
+        this.title=title;
+        this.content=content;
+    }
+
 
     public void setName(String name) {
         this.name = name;
