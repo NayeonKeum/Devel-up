@@ -157,6 +157,8 @@ public class Fragment1 extends Fragment {
 
         final EditText utitle = view.findViewById(R.id.utitle);
         final EditText ucontent = view.findViewById(R.id.ucontent);
+
+
         Button update = view.findViewById(R.id.update);
 
 

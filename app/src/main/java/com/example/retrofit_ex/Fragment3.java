@@ -76,7 +76,6 @@ public class Fragment3 extends Fragment{
         allpost = getView().findViewById(R.id.allpost);
         showBtn = getView().findViewById(R.id.showBtn);
 
-
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

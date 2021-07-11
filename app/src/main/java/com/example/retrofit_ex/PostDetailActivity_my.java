@@ -85,13 +85,15 @@ public class PostDetailActivity_my extends AppCompatActivity {
         final EditText ucontent = view.findViewById(R.id.ucontent);
         Button update = view.findViewById(R.id.update);
 
+        utitle.setText(title);
+        ucontent.setText(content);
+
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 HashMap<String, String> map = new HashMap<>();
-
 
                 map.put("name", name);
                 map.put("title", utitle.getText().toString());
