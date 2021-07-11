@@ -88,14 +88,14 @@ public class PostDetailActivity_my extends AppCompatActivity {
                 UpdatePost();
             }
         });
-        like_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Isliked){ addLike();}
-                else {Toast.makeText(PostDetailActivity_my.this, "Already Liked!",
-                        Toast.LENGTH_LONG).show();}
-            }
-        });
+//        like_layout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!Isliked){ addLike();}
+//                else {Toast.makeText(PostDetailActivity_my.this, "Already Liked!",
+//                        Toast.LENGTH_LONG).show();}
+//            }
+//        });
     }
 
     private void addLike() {
