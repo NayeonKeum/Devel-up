@@ -14,12 +14,17 @@
         android:text="all posts here"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:id="@+id/allpost"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="show"
         android:id="@+id/showBtn"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        android:id="@+id/deleteBtn"/>
 
 </LinearLayout>

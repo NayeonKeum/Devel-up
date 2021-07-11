@@ -67,8 +67,6 @@ public class Fragment1 extends Fragment {
     }
 
 
-
-
     private void Post() {
 
         View view = getLayoutInflater().inflate(R.layout.f1_write, null);
