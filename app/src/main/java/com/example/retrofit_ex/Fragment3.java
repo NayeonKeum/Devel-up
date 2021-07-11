@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,26 +30,27 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
-public class Fragment3 extends Fragment{
+public class Fragment3 extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://172.10.18.137:80";
     String name;
     TextView allpost;
-    Button showBtn;
+    Button showBtn, postBtn;
     private RecyclerView postRV;
     private PostVAdapter postRVAdapter;
     ArrayList<PostInfo> Postlist;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent= getActivity().getIntent();
-        name=intent.getStringExtra("name");
+        Intent intent = getActivity().getIntent();
+        name = intent.getStringExtra("name");
         Log.d("내 이름이 모라구?", name);
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -63,6 +66,7 @@ public class Fragment3 extends Fragment{
         View view = inflater.inflate(R.layout.fragment_3, container, false);
         return view;
     }
+
     public void onResume() {
         super.onResume();
         Postlist = new ArrayList<>();
@@ -75,6 +79,7 @@ public class Fragment3 extends Fragment{
 
         allpost = getView().findViewById(R.id.allpost);
         showBtn = getView().findViewById(R.id.showBtn);
+        postBtn = getView().findViewById(R.id.postBtn);
 
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,27 +95,21 @@ public class Fragment3 extends Fragment{
                         if (response.code() == 500) {
                             Toast.makeText(getActivity(),
                                     "database has failed", Toast.LENGTH_LONG).show();
-                        }
-                        else if (response.code() == 200){
+                        } else if (response.code() == 200) {
                             Toast.makeText(getActivity(),
                                     "Uploaded successfully", Toast.LENGTH_LONG).show();
 
                             Gson gson = new Gson();
                             try {
-                                String jsonString= response.body().string();
-                                List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>(){}.getType());
+                                String jsonString = response.body().string();
+                                List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>() {
+                                }.getType());
                                 //allpost.setText(list.toString());
-                                Postlist=new ArrayList<PostInfo>();
-                                for (int i=0;i<list.size();i++){
-                                    Postlist.add(new PostInfo(list.get(i).getName(),list.get(i).getTitle(),list.get(i).getContent()));
+                                Postlist = new ArrayList<PostInfo>();
+                                for (int i = 0; i < list.size(); i++) {
+                                    Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent(), list.get(i).getLike()));
                                 }
-                                String total="";
-                                for (int i=0;i<Postlist.size();i++){
-                                    total+="name : "+Postlist.get(i).getName()+"\n"
-                                            +"title : "+Postlist.get(i).getTitle()+"\n"
-                                            +"content : "+Postlist.get(i).getContent()+"\n\n";
-                                }
-                                //allpost.setText(total);
+
 
                                 ////////////////////////
                                 postRV = getView().findViewById(R.id.idRVContacts);
@@ -121,8 +120,6 @@ public class Fragment3 extends Fragment{
                                 postRVAdapter = new PostVAdapter(Postlist, name);
                                 //on below line we are setting adapter to our recycler view.
                                 postRV.setAdapter(postRVAdapter);
-
-
 
 
                             } catch (IOException e) {
@@ -140,11 +137,67 @@ public class Fragment3 extends Fragment{
                 });
 
 
+            }
+        });
+
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Post();
+            }
+        });
+
+    }
+
+    private void Post() {
+
+        View view = getLayoutInflater().inflate(R.layout.f1_write, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(view).show();
+
+        final EditText title = view.findViewById(R.id.title);
+        final EditText content = view.findViewById(R.id.content);
+        Button upload = view.findViewById(R.id.upload);
+
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("name", name);
+                map.put("title", title.getText().toString());
+                map.put("content", content.getText().toString());
+                map.put("like", "00");
+
+                Call<Void> call = retrofitInterface.executePost(map);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                        if (response.code() == 200) {
+                            Toast.makeText(getActivity(),
+                                    "Uploaded successfully", Toast.LENGTH_LONG).show();
+                        } else if (response.code() == 400) {
+                            Toast.makeText(getActivity(),
+                                    "Same title, change please", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getActivity(), t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
 
             }
         });
-    }
 
+    }
 }
 
 

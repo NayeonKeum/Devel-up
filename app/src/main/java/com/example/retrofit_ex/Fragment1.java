@@ -2,21 +2,28 @@ package com.example.retrofit_ex;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashMap;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +36,12 @@ public class Fragment1 extends Fragment {
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://172.10.18.137:80";
     String name;
-    Button postBtn, deleteBtn,updateBtn;
+
+    private RecyclerView per_postRV;
+    private PostVAdapter postRVAdapter;
+    ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>();
+    ArrayList<PostInfo> personalPostlist=new ArrayList<PostInfo>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,8 @@ public class Fragment1 extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+
     }
 
     @Nullable
@@ -54,198 +68,67 @@ public class Fragment1 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        postBtn = getView().findViewById(R.id.post);
-        deleteBtn = getView().findViewById(R.id.deleteBtn);
-        updateBtn = getView().findViewById(R.id.updateBtn);
+        Call<ResponseBody> call = retrofitInterface.getPost();
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onClick(View v) {
-                DeletePost();
-            }
-        });
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectUpdatePost();
-            }
-        });
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //List<JSONObject> result= response.body();
+                //showPostResult
+                if (response.code() == 500) {
+                    Toast.makeText(getActivity(),
+                            "database has failed", Toast.LENGTH_LONG).show();
+                } else if (response.code() == 200) {
+                    Toast.makeText(getActivity(),
+                            "Uploaded successfully", Toast.LENGTH_LONG).show();
 
-        postBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Post();
-            }
-        });
+                    Gson gson = new Gson();
+                    try {
+                        String jsonString = response.body().string();
+                        List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>() {
+                        }.getType());
 
-    }
-
-
-    private void Post() {
-
-        View view = getLayoutInflater().inflate(R.layout.f1_write, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).show();
-
-        final EditText title = view.findViewById(R.id.title);
-        final EditText content = view.findViewById(R.id.content);
-        Button upload = view.findViewById(R.id.upload);
-
-
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                HashMap<String, String> map = new HashMap<>();
-                map.put("name", name);
-                map.put("title", title.getText().toString());
-                map.put("content", content.getText().toString());
-                //map.put("password", passwordEdit.getText().toString());
-
-                Call<Void> call = retrofitInterface.executePost(map);
-
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-
-                        if (response.code() == 200) {
-                            Toast.makeText(getActivity(),
-                                    "Uploaded successfully", Toast.LENGTH_LONG).show();
-                        } else if (response.code() == 400) {
-                            Toast.makeText(getActivity(),
-                                    "Same title, change please", Toast.LENGTH_LONG).show();
+                        for (int i = 0; i < list.size(); i++) {
+                            Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent(), list.get(i).getLike()));
                         }
 
-                    }
 
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getActivity(), t.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-
-            }
-        });
-
-    }
-    private void selectUpdatePost() {
-
-        View view = getLayoutInflater().inflate(R.layout.f1_selectupdate, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).show();
-
-        final EditText title = view.findViewById(R.id.title);
-        Button update = view.findViewById(R.id.update);
-
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UpdatePost();
-            }
-        });
-
-    }
-
-    private void UpdatePost() {
-        View view = getLayoutInflater().inflate(R.layout.f1_update, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).show();
-
-        final EditText utitle = view.findViewById(R.id.utitle);
-        final EditText ucontent = view.findViewById(R.id.ucontent);
-
-
-        Button update = view.findViewById(R.id.update);
-
-
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                HashMap<String, String> map = new HashMap<>();
-
-                map.put("name", name);
-                map.put("title", utitle.getText().toString());
-                map.put("content", ucontent.getText().toString());
-
-                Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
-
-                call.enqueue(new Callback<UpdateResult>() {
-                    @Override
-                    public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
-
-                        if (response.code() == 200) {
-
-                            UpdateResult result = response.body();
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                            builder1.setTitle("Updated title : "+result.getTitle());
-                            builder1.setMessage("Updated content : "+result.getContent());
-
-                            builder1.show();
-
-                        } else if (response.code() == 404) {
-                            Toast.makeText(getActivity(), "Title already exists",
-                                    Toast.LENGTH_LONG).show();
+                        for (int i = 0; i < Postlist.size(); i++) {
+                            if (name.equals(Postlist.get(i).getName())) {
+                                personalPostlist.add(new PostInfo(Postlist.get(i).getName(), Postlist.get(i).getTitle(), Postlist.get(i).getContent(), Postlist.get(i).getLike()));
+                            }
                         }
+
+                        ////////////////////////
+                        per_postRV = getView().findViewById(R.id.idRVContacts);
+                        //on below line we are setting layout mnager.
+                        per_postRV.setLayoutManager(new LinearLayoutManager(getContext()));
+                        per_postRV.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
+
+                        postRVAdapter = new PostVAdapter(personalPostlist, name);
+                        //on below line we are setting adapter to our recycler view.
+                        per_postRV.setAdapter(postRVAdapter);
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    @Override
-                    public void onFailure(Call<UpdateResult> call, Throwable t) {
-                        Toast.makeText(getActivity(), t.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
+
+                }
             }
-        });
-    }
 
-    private void DeletePost() {
-
-        View view = getLayoutInflater().inflate(R.layout.f1_delete, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).show();
-
-        final EditText title = view.findViewById(R.id.title);
-        Button delete = view.findViewById(R.id.delete);
-
-
-        delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-
-                HashMap<String, String> map = new HashMap<>();
-                map.put("name", name);
-                map.put("title", title.getText().toString());
-
-                Call<Void> call = retrofitInterface.deletePost(map);
-
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-
-                        if (response.code() == 200) {
-                            Toast.makeText(getActivity(),
-                                    "Deleted successfully", Toast.LENGTH_LONG).show();
-                        } else if (response.code() == 400) {
-                            Toast.makeText(getActivity(),
-                                    "There's no such title", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getActivity(), t.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(),
+                        Toast.LENGTH_LONG).show();
             }
         });
 
+
+    }
+    public void onResume() {
+        super.onResume();
+        personalPostlist=new ArrayList<PostInfo>();
+        Postlist=new ArrayList<PostInfo>();
     }
 }

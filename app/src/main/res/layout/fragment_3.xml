@@ -25,7 +25,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/idRVContacts"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="500dp"
             android:layout_margin="5dp"
             android:gravity="center_horizontal" />
 
@@ -39,8 +39,14 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="show"
+                android:text="Show"
                 android:id="@+id/showBtn"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Post"
+                android:id="@+id/postBtn"
                 />
         </LinearLayout>
 

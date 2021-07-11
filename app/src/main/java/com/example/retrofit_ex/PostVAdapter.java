@@ -27,7 +27,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, title, content;
+        TextView name, title, content, like;
 
 
         public ViewHolder(View itemView) {
@@ -37,6 +37,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
             this.name = itemView.findViewById(R.id.name) ;
             this.title = itemView.findViewById(R.id.title);
             this.content = itemView.findViewById(R.id.content);
+            this.like=itemView.findViewById(R.id.like);
         }
     }
     public PostVAdapter(ArrayList<PostInfo> list, String userName) {
@@ -49,7 +50,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
-        View view = inflater.inflate(R.layout.f3_rc_item, parent, false) ;
+        View view = inflater.inflate(R.layout.rc_item, parent, false) ;
         ViewHolder vh = new ViewHolder(view) ;
 
         return vh ;
@@ -65,6 +66,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
         holder.name.setText(mList.get(position).getName()) ;
         holder.title.setText(mList.get(position).getTitle()) ;
         holder.content.setText(mList.get(position).getContent()) ;
+        holder.like.setText(mList.get(position).getLike());
 
         //여기 클릭 리스너 넣으면 라이프 사이클 때문에 안 됨\
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +81,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                     i.putExtra("name", modal.getName());
                     i.putExtra("title", modal.getTitle());
                     i.putExtra("content", modal.getContent());
+                    i.putExtra("like", modal.getLike());
                     //on below line we are starting a new activity,
                     holder.itemView.getContext().startActivity(i);
                 } else{
@@ -87,6 +90,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                     i.putExtra("name", modal.getName());
                     i.putExtra("title", modal.getTitle());
                     i.putExtra("content", modal.getContent());
+                    i.putExtra("like", modal.getLike());
                     //on below line we are starting a new activity,
                     holder.itemView.getContext().startActivity(i);
                 }
