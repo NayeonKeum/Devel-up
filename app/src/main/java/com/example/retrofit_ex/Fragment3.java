@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import java.io.IOException;
@@ -26,7 +27,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,7 +38,10 @@ public class Fragment3 extends Fragment{
     private String BASE_URL = "http://172.10.18.137:80";
     String name;
     TextView allpost;
-    Button showBtn, deleteBtn,updateBtn;
+    Button showBtn;
+    private RecyclerView postRV;
+    private PostVAdapter postRVAdapter;
+    ArrayList<PostInfo> Postlist;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,11 @@ public class Fragment3 extends Fragment{
         View view = inflater.inflate(R.layout.fragment_3, container, false);
         return view;
     }
+    public void onResume() {
+        super.onResume();
+        Postlist = new ArrayList<>();
+    }
+
 
     @Override
     public void onStart() {
@@ -65,22 +73,7 @@ public class Fragment3 extends Fragment{
 
         allpost = getView().findViewById(R.id.allpost);
         showBtn = getView().findViewById(R.id.showBtn);
-        deleteBtn = getView().findViewById(R.id.deleteBtn);
-        updateBtn = getView().findViewById(R.id.updateBtn);
 
-
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DeletePost();
-            }
-        });
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectUpdatePost();
-            }
-        });
 
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +99,7 @@ public class Fragment3 extends Fragment{
                                 String jsonString= response.body().string();
                                 List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>(){}.getType());
                                 //allpost.setText(list.toString());
-                                ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>();
+                                Postlist=new ArrayList<PostInfo>();
                                 for (int i=0;i<list.size();i++){
                                     Postlist.add(new PostInfo(list.get(i).getName(),list.get(i).getTitle(),list.get(i).getContent()));
                                 }
@@ -116,7 +109,17 @@ public class Fragment3 extends Fragment{
                                             +"title : "+Postlist.get(i).getTitle()+"\n"
                                             +"content : "+Postlist.get(i).getContent()+"\n\n";
                                 }
-                                allpost.setText(total);
+                                //allpost.setText(total);
+
+                                ////////////////////////
+                                postRV = getView().findViewById(R.id.idRVContacts);
+                                //on below line we are setting layout mnager.
+                                postRV.setLayoutManager(new LinearLayoutManager(getContext()));
+                                postRV.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
+
+                                postRVAdapter = new PostVAdapter(Postlist);
+                                //on below line we are setting adapter to our recycler view.
+                                postRV.setAdapter(postRVAdapter);
 
 
 
@@ -135,125 +138,12 @@ public class Fragment3 extends Fragment{
                     }
                 });
 
+
+
             }
         });
     }
 
-    private void selectUpdatePost() {
-
-        View view = getLayoutInflater().inflate(R.layout.f3_selectupdate, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).show();
-
-        final EditText title = view.findViewById(R.id.title);
-        Button update = view.findViewById(R.id.update);
-
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UpdatePost();
-            }
-        });
-
-    }
-
-    private void UpdatePost() {
-        View view = getLayoutInflater().inflate(R.layout.f3_update, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).show();
-
-        final EditText utitle = view.findViewById(R.id.utitle);
-        final EditText ucontent = view.findViewById(R.id.ucontent);
-        Button update = view.findViewById(R.id.update);
-
-
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                HashMap<String, String> map = new HashMap<>();
-
-                map.put("title", utitle.getText().toString());
-                map.put("content", ucontent.getText().toString());
-
-                Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
-
-                call.enqueue(new Callback<UpdateResult>() {
-                    @Override
-                    public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
-
-                        if (response.code() == 200) {
-
-                            UpdateResult result = response.body();
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                            builder1.setTitle("Updated title : "+result.getTitle());
-                            builder1.setMessage("Updated content : "+result.getContent());
-
-                            builder1.show();
-
-                        } else if (response.code() == 404) {
-                            Toast.makeText(getActivity(), "Title already exists",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<UpdateResult> call, Throwable t) {
-                        Toast.makeText(getActivity(), t.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
-    }
-
-    private void DeletePost() {
-
-        View view = getLayoutInflater().inflate(R.layout.f3_delete, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view).show();
-
-        final EditText title = view.findViewById(R.id.title);
-        Button delete = view.findViewById(R.id.delete);
-
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                HashMap<String, String> map = new HashMap<>();
-                map.put("name", name);
-                map.put("title", title.getText().toString());
-
-                Call<Void> call = retrofitInterface.deletePost(map);
-
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-
-                        if (response.code() == 200) {
-                            Toast.makeText(getActivity(),
-                                    "Deleted successfully", Toast.LENGTH_LONG).show();
-                        } else if (response.code() == 400) {
-                            Toast.makeText(getActivity(),
-                                    "There's no such title", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getActivity(), t.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-
-            }
-        });
-
-    }
 }
 
 
