@@ -32,6 +32,9 @@ public interface RetrofitInterface {
     @HTTP(method = "DELETE", path = "/post/delete", hasBody = true)
     Call<Void> deletePost(
             @Body HashMap<String, String> map);
+
+    @POST("/post/update")
+    Call<UpdateResult> executeUpdate (@Body HashMap<String, String> map);
 }
 
 
