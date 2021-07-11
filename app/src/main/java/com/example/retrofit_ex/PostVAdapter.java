@@ -2,6 +2,7 @@ package com.example.retrofit_ex;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
     private ArrayList<PostInfo> mList = null ;
     public MainActivity activity;
     int position;
+    String userName;
 
     public void onAttach(Activity activity){
         this.activity= (MainActivity) activity;
@@ -37,8 +39,9 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
             this.content = itemView.findViewById(R.id.content);
         }
     }
-    public PostVAdapter(ArrayList<PostInfo> list) {
+    public PostVAdapter(ArrayList<PostInfo> list, String userName) {
         this.mList = list ;
+        this.userName=userName;
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
@@ -69,14 +72,26 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
             public void onClick(View v) {
                 //on below line we are opening a new activity and passing data to it.
                 Log.d("PostVAdapter", "리사이클러뷰 아이템 누름"+position);
-//                Intent i = new Intent(holder.itemView.getContext(), ContactDetailActivity.class);
-//                i.putExtra("name", modal.getName());
-//                i.putExtra("contact", modal.getNum());
-//                //on below line we are starting a new activity,
-//                holder.itemView.getContext().startActivity(i);
+
+                if (userName.equals(modal.getName())) {
+                    Intent i = new Intent(holder.itemView.getContext(), PostDetailActivity_my.class);
+                    Log.d("이름 같", userName+", "+modal.getName());
+                    i.putExtra("name", modal.getName());
+                    i.putExtra("title", modal.getTitle());
+                    i.putExtra("content", modal.getContent());
+                    //on below line we are starting a new activity,
+                    holder.itemView.getContext().startActivity(i);
+                } else{
+                    Intent i = new Intent(holder.itemView.getContext(), PostDetailActivity_else.class);
+                    Log.d("이름 다름",userName+", "+modal.getName());
+                    i.putExtra("name", modal.getName());
+                    i.putExtra("title", modal.getTitle());
+                    i.putExtra("content", modal.getContent());
+                    //on below line we are starting a new activity,
+                    holder.itemView.getContext().startActivity(i);
+                }
             }
         });
-
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.

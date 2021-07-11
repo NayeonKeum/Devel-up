@@ -3,6 +3,7 @@ package com.example.retrofit_ex;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class Fragment3 extends Fragment{
         super.onCreate(savedInstanceState);
         Intent intent= getActivity().getIntent();
         name=intent.getStringExtra("name");
+        Log.d("내 이름이 모라구?", name);
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -117,7 +119,7 @@ public class Fragment3 extends Fragment{
                                 postRV.setLayoutManager(new LinearLayoutManager(getContext()));
                                 postRV.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
 
-                                postRVAdapter = new PostVAdapter(Postlist);
+                                postRVAdapter = new PostVAdapter(Postlist, name);
                                 //on below line we are setting adapter to our recycler view.
                                 postRV.setAdapter(postRVAdapter);
 

@@ -21,6 +21,8 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".ChatActivity"></activity>
         <activity android:name=".MainChatActivity"></activity>
+        <activity android:name=".PostDetailActivity_my"></activity>
+        <activity android:name=".PostDetailActivity_else"></activity>
         <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".SplashActivity">

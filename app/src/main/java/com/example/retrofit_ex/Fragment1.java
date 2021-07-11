@@ -166,6 +166,7 @@ public class Fragment1 extends Fragment {
 
                 HashMap<String, String> map = new HashMap<>();
 
+                map.put("name", name);
                 map.put("title", utitle.getText().toString());
                 map.put("content", ucontent.getText().toString());
 
