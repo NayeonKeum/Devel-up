@@ -60,7 +60,8 @@ public class PostDetailActivity_my extends AppCompatActivity {
         Vname.setText("my name : " + name);
         Vtitle.setText("title : " + title);
         Vcontent.setText("content : \n" + content);
-        Vlike.setText("like : " + like);
+        //비어있네 젠장,,,
+        //Vlike.setText("like : " + like);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
