@@ -27,7 +27,6 @@
             android:hint="like"
             android:id="@+id/like"/>
     </LinearLayout>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,5 +34,29 @@
         android:hint="content"
         android:id="@+id/content"
         />
+    <View
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#000000"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVContacts"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comment"
+        android:id="@+id/writeComment"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="writeComment"
+        android:id="@+id/commentBtn"/>
 
 </LinearLayout>

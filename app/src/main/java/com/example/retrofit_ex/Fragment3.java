@@ -133,7 +133,6 @@ public class Fragment3 extends Fragment {
                     }
                 });
 
-
             }
         });
 
@@ -143,7 +142,6 @@ public class Fragment3 extends Fragment {
                 Post();
             }
         });
-
     }
 
     private void Post() {

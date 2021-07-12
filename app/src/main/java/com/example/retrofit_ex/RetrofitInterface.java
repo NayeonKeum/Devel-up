@@ -1,20 +1,16 @@
 package com.example.retrofit_ex;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+
+
 
 public interface RetrofitInterface {
     @POST("/login")
@@ -35,6 +31,16 @@ public interface RetrofitInterface {
 
     @POST("/post/update")
     Call<UpdateResult> executeUpdate (@Body HashMap<String, Object> map);
+
+    @GET("/comment/all")
+    Call<ResponseBody> getComment();
+
+    @POST("/comment/post")
+    Call<Void> executeCommentPost (@Body HashMap<String, Object> map);
+
+    @HTTP(method = "DELETE", path = "/comment/delete", hasBody = true)
+    Call<Void> deleteComment(
+            @Body HashMap<String, String> map);
 
 }
 

@@ -1,44 +1,26 @@
 package com.example.retrofit_ex;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static java.security.AccessController.getContext;
 
 public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> {
     private ArrayList<PostInfo> mList;
@@ -50,8 +32,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
 
     private final RetrofitInterface retrofitInterface;
     ArrayList<PostInfo> Postlist=new ArrayList<>();
-
-
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,7 +48,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
             this.like = itemView.findViewById(R.id.like);
             this.likeImg=itemView.findViewById(R.id.likeImg);
         }
-
     }
     public PostVAdapter(ArrayList<PostInfo> list, String userName) {
         this.mList = list ;
@@ -80,7 +59,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitInterface = retrofit.create(RetrofitInterface.class);
-
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
@@ -88,10 +66,11 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
-        View view = inflater.inflate(R.layout.rc_item, parent, false) ;
+        View view = inflater.inflate(R.layout.post_rc_item, parent, false) ;
         ViewHolder vh = new ViewHolder(view) ;
         return vh ;
     }
+
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @SuppressLint("SetTextI18n")
     @Override
@@ -128,7 +107,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                         holder.like.setText(Integer.toString(namesofliked.size() - 1));
 
                         HashMap<String, Object> map = new HashMap<>();
-
                         map.put("name", holder.name.getText());
                         map.put("title", holder.title.getText());
                         map.put("content", holder.content.getText());
@@ -138,7 +116,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                         Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
 
                         //여기까지 괜찮음!
-
                         call.enqueue(new Callback<UpdateResult>() {
                             @Override
                             public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
