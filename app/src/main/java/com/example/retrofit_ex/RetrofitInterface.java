@@ -24,7 +24,7 @@ public interface RetrofitInterface {
     Call<Void> executeSignup (@Body HashMap<String, String> map);
 
     @POST("/post")
-    Call<Void> executePost (@Body HashMap<String, String> map);
+    Call<Void> executePost (@Body HashMap<String, Object> map);
 
     @GET("/post/all")
     Call<ResponseBody> getPost();
@@ -34,7 +34,8 @@ public interface RetrofitInterface {
             @Body HashMap<String, String> map);
 
     @POST("/post/update")
-    Call<UpdateResult> executeUpdate (@Body HashMap<String, String> map);
+    Call<UpdateResult> executeUpdate (@Body HashMap<String, Object> map);
+
 }
 
 

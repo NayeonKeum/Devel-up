@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -31,7 +34,8 @@ public class PostDetailActivity_my extends AppCompatActivity {
     private String BASE_URL = "http://172.10.18.137:80";
 
     String name, title, content;
-    TextView Vname, Vtitle, Vcontent;
+    ArrayList<String> namesofliked;
+    TextView Vname, Vtitle, Vcontent, Vliked;
     Button deleteBtn, updateBtn;
 
     @Override
@@ -43,16 +47,17 @@ public class PostDetailActivity_my extends AppCompatActivity {
         name = intent.getStringExtra("name");
         title = intent.getStringExtra("title");
         content = intent.getStringExtra("content");
+        namesofliked=intent.getStringArrayListExtra("namesofliked");
 
         Vname = findViewById(R.id.name);
         Vtitle = findViewById(R.id.title);
         Vcontent = findViewById(R.id.content);
-
-
+        Vliked=findViewById(R.id.like);
 
         Vname.setText("my name : " + name);
         Vtitle.setText("title : " + title);
         Vcontent.setText("content : \n" + content);
+        Vliked.setText(""+namesofliked.size());
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -79,7 +84,6 @@ public class PostDetailActivity_my extends AppCompatActivity {
                 UpdatePost();
             }
         });
-
     }
 
 
@@ -89,11 +93,11 @@ public class PostDetailActivity_my extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(PostDetailActivity_my.this);
         builder.setView(view).show();
 
-        final EditText utitle = view.findViewById(R.id.utitle);
+        //final EditText utitle = view.findViewById(R.id.utitle);
         final EditText ucontent = view.findViewById(R.id.ucontent);
         Button update = view.findViewById(R.id.update);
 
-        utitle.setText(title);
+        //utitle.setText(title);
         ucontent.setText(content);
 
 
@@ -101,12 +105,14 @@ public class PostDetailActivity_my extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                HashMap<String, String> map = new HashMap<>();
+                HashMap<String, Object> map = new HashMap<>();
 
                 map.put("name", name);
-                map.put("title", utitle.getText().toString());
+                map.put("title", title);
                 map.put("content", ucontent.getText().toString());
+                map.put("namesofliked",namesofliked);
 
+                Log.d("해시 리스트 : ", map.toString());
                 Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
 
                 call.enqueue(new Callback<UpdateResult>() {

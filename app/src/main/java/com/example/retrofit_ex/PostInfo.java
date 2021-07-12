@@ -1,13 +1,17 @@
 package com.example.retrofit_ex;
 
+import java.util.ArrayList;
+
 public class PostInfo {
     private int __v;
     private String name, title, content, _id;
+    ArrayList<String> namesofliked;
     public PostInfo(){}
-    public PostInfo(String name, String title, String content){
+    public PostInfo(String name, String title, String content, ArrayList<String> namesofliked){
         this.name=name;
         this.title=title;
         this.content=content;
+        this.namesofliked=namesofliked;
     }
 
 
@@ -31,6 +35,9 @@ public class PostInfo {
         this.title = title;
     }
 
+    public void setNamesofliked(ArrayList<String> namesofliked) {
+        this.namesofliked = namesofliked;
+    }
 
     public int get__v() {
         return __v;
@@ -52,4 +59,7 @@ public class PostInfo {
         return title;
     }
 
+    public ArrayList<String> getNamesofliked() {
+        return namesofliked;
+    }
 }

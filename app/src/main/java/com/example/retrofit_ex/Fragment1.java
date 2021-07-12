@@ -39,9 +39,8 @@ public class Fragment1 extends Fragment {
 
     private RecyclerView per_postRV;
     private PostVAdapter postRVAdapter;
-    ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>();
-    ArrayList<PostInfo> personalPostlist=new ArrayList<PostInfo>();
-
+    ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>(30);
+    ArrayList<PostInfo> personalPostlist=new ArrayList<PostInfo>(30);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +53,6 @@ public class Fragment1 extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitInterface = retrofit.create(RetrofitInterface.class);
-
-
     }
 
     @Nullable
@@ -85,17 +82,17 @@ public class Fragment1 extends Fragment {
                     Gson gson = new Gson();
                     try {
                         String jsonString = response.body().string();
-                        List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>() {
-                        }.getType());
+                        Log.d("받아온 제이슨", jsonString);
+                        List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>() {}.getType());
 
                         for (int i = 0; i < list.size(); i++) {
-                            Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent()));
+                            Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent(), list.get(i).getNamesofliked()));
                         }
 
 
                         for (int i = 0; i < Postlist.size(); i++) {
                             if (name.equals(Postlist.get(i).getName())) {
-                                personalPostlist.add(new PostInfo(Postlist.get(i).getName(), Postlist.get(i).getTitle(), Postlist.get(i).getContent()));
+                                personalPostlist.add(new PostInfo(Postlist.get(i).getName(), Postlist.get(i).getTitle(), Postlist.get(i).getContent(), Postlist.get(i).getNamesofliked()));
                             }
                         }
 

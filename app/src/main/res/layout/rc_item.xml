@@ -44,23 +44,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/like_layout">
-        <ImageView
+        android:id="@+id/like_layout"
+        android:gravity="right"
+        >
+        <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/like_n"
-            android:id="@+id/likeImg"/>
+            android:id="@+id/likeImg"
+            android:button="@drawable/custom_checkbox"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/like"
             android:text="like"/>
     </LinearLayout>
-    <ImageView
-        android:layout_gravity="right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/per"
-        android:id="@+id/scrap"
-        app:tint="@color/purple_700" />
+
 </LinearLayout>

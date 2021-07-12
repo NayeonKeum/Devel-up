@@ -72,7 +72,6 @@ public class Fragment3 extends Fragment {
         Postlist = new ArrayList<>();
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -102,12 +101,10 @@ public class Fragment3 extends Fragment {
                             Gson gson = new Gson();
                             try {
                                 String jsonString = response.body().string();
-                                List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>() {
-                                }.getType());
-                                //allpost.setText(list.toString());
+                                List<PostInfo> list = gson.fromJson(jsonString, new TypeToken<List<PostInfo>>() {}.getType());
                                 Postlist = new ArrayList<PostInfo>();
                                 for (int i = 0; i < list.size(); i++) {
-                                    Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent()));
+                                    Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent(), list.get(i).getNamesofliked()));
                                 }
 
 
@@ -155,21 +152,22 @@ public class Fragment3 extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view).show();
+        ArrayList<String> namesofliked=new ArrayList<>();
+        namesofliked.add("default");
 
         final EditText title = view.findViewById(R.id.title);
         final EditText content = view.findViewById(R.id.content);
         Button upload = view.findViewById(R.id.upload);
 
-
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                HashMap<String, String> map = new HashMap<>();
+                HashMap<String, Object> map = new HashMap<>();
                 map.put("name", name);
                 map.put("title", title.getText().toString());
                 map.put("content", content.getText().toString());
-                map.put("like", "0");
+                map.put("namesofliked",namesofliked );
 
                 Log.d("보낸다", map.toString());
 
