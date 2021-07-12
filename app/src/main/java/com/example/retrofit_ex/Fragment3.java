@@ -176,7 +176,6 @@ public class Fragment3 extends Fragment {
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-
                         if (response.code() == 200) {
                             Toast.makeText(getActivity(),
                                     "Uploaded successfully", Toast.LENGTH_LONG).show();
@@ -184,7 +183,6 @@ public class Fragment3 extends Fragment {
                             Toast.makeText(getActivity(),
                                     "Same title, change please", Toast.LENGTH_LONG).show();
                         }
-
                     }
 
                     @Override

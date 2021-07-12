@@ -3,22 +3,40 @@ package com.example.retrofit_ex;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<PostInfo> mList = null ;
+    private ArrayList<PostInfo> mList = new ArrayList<PostInfo>();
     public MainActivity activity;
     int position;
     String userName;
+    boolean Isliked=false;
+
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://172.10.18.137:80";
+
 
     public void onAttach(Activity activity){
         this.activity= (MainActivity) activity;
@@ -28,6 +46,8 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, title, content, like;
+        LinearLayout like_layout;
+        ImageView likeImg;
 
 
         public ViewHolder(View itemView) {
@@ -38,6 +58,8 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
             this.title = itemView.findViewById(R.id.title);
             this.content = itemView.findViewById(R.id.content);
             this.like=itemView.findViewById(R.id.like);
+            this.like_layout=itemView.findViewById(R.id.like_layout);
+            this.likeImg=itemView.findViewById(R.id.likeImg);
         }
     }
     public PostVAdapter(ArrayList<PostInfo> list, String userName) {
@@ -68,7 +90,54 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
         holder.content.setText(mList.get(position).getContent()) ;
         holder.like.setText(mList.get(position).getLike());
 
-        //여기 클릭 리스너 넣으면 라이프 사이클 때문에 안 됨\
+//        holder.like_layout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!Isliked){
+//
+//                    retrofit = new Retrofit.Builder()
+//                            .baseUrl(BASE_URL)
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .build();
+//                    retrofitInterface = retrofit.create(RetrofitInterface.class);
+//
+//                    HashMap<String, String> map = new HashMap<>();
+//
+//                    map.put("name",  modal.getName());
+//                    map.put("title",  modal.getTitle());
+//                    map.put("content",  modal.getContent());
+//                    map.put("like", Integer.toString(Integer.parseInt(like)+1));
+//
+//                    likeImg.setColorFilter(Color.parseColor("#ff2e2e"), PorterDuff.Mode.SRC_IN);
+//
+//
+//                    Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
+//
+//                    call.enqueue(new Callback<UpdateResult>() {
+//                        @Override
+//                        public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
+//                            if (response.code() == 200) {
+//                                Toast.makeText(PostDetailActivity_my.this, "Liked!",
+//                                        Toast.LENGTH_LONG).show();
+//                            } else if (response.code() == 404) {
+//                                Toast.makeText(PostDetailActivity_my.this, "Somthings Wrong",
+//                                        Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<UpdateResult> call, Throwable t) {
+//                            Toast.makeText(PostDetailActivity_my.this, t.getMessage(),
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//
+//                }
+//                else {
+//                    Log.d("좋아요", "Already Liked!");
+//            }
+//        }});
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +165,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                 }
             }
         });
+
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.

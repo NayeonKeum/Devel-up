@@ -29,18 +29,16 @@ public class PostDetailActivity_my extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://172.10.18.137:80";
-    boolean Isliked=false;
 
     String name, title, content, like;
     TextView Vname, Vtitle, Vcontent, Vlike;
-    ImageView likeImg;
     Button deleteBtn, updateBtn;
-    LinearLayout like_layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f3_myview);
+
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         title = intent.getStringExtra("title");
@@ -51,17 +49,13 @@ public class PostDetailActivity_my extends AppCompatActivity {
         Vtitle = findViewById(R.id.title);
         Vcontent = findViewById(R.id.content);
         Vlike=findViewById(R.id.like);
-        like_layout=findViewById(R.id.like_layout);
-        //좋아요시 색 변경,,
-        likeImg=findViewById(R.id.likeImg);
 
 
 
         Vname.setText("my name : " + name);
         Vtitle.setText("title : " + title);
         Vcontent.setText("content : \n" + content);
-        //비어있네 젠장,,,
-        //Vlike.setText("like : " + like);
+        Vlike.setText("like : " + like);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -88,49 +82,9 @@ public class PostDetailActivity_my extends AppCompatActivity {
                 UpdatePost();
             }
         });
-//        like_layout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!Isliked){ addLike();}
-//                else {Toast.makeText(PostDetailActivity_my.this, "Already Liked!",
-//                        Toast.LENGTH_LONG).show();}
-//            }
-//        });
-    }
-
-    private void addLike() {
-        HashMap<String, String> map = new HashMap<>();
-
-        map.put("name", name);
-        map.put("title", title);
-        map.put("content", content);
-        map.put("like", Integer.toString(Integer.parseInt(like)+1));
-
-        likeImg.setColorFilter(Color.parseColor("#ff2e2e"), PorterDuff.Mode.SRC_IN);
-
-
-        Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
-
-        call.enqueue(new Callback<UpdateResult>() {
-            @Override
-            public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
-                if (response.code() == 200) {
-                    Toast.makeText(PostDetailActivity_my.this, "Liked!",
-                            Toast.LENGTH_LONG).show();
-                } else if (response.code() == 404) {
-                    Toast.makeText(PostDetailActivity_my.this, "Somthings Wrong",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateResult> call, Throwable t) {
-                Toast.makeText(PostDetailActivity_my.this, t.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
 
     }
+
 
     private void UpdatePost() {
         View view = getLayoutInflater().inflate(R.layout.f1_update, null);
