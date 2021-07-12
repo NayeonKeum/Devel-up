@@ -2,13 +2,12 @@ package com.example.retrofit_ex;
 
 public class PostInfo {
     private int __v;
-    private String name, title, content, _id, like;
+    private String name, title, content, _id;
     public PostInfo(){}
-    public PostInfo(String name, String title, String content, String like){
+    public PostInfo(String name, String title, String content){
         this.name=name;
         this.title=title;
         this.content=content;
-        this.like=like;
     }
 
 
@@ -32,9 +31,6 @@ public class PostInfo {
         this.title = title;
     }
 
-    public void setLike(String like) {
-        this.like = like;
-    }
 
     public int get__v() {
         return __v;
@@ -56,7 +52,4 @@ public class PostInfo {
         return title;
     }
 
-    public String getLike() {
-        return like;
-    }
 }

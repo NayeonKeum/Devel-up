@@ -107,7 +107,7 @@ public class Fragment3 extends Fragment {
                                 //allpost.setText(list.toString());
                                 Postlist = new ArrayList<PostInfo>();
                                 for (int i = 0; i < list.size(); i++) {
-                                    Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent(), list.get(i).getLike()));
+                                    Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent()));
                                 }
 
 
@@ -169,7 +169,9 @@ public class Fragment3 extends Fragment {
                 map.put("name", name);
                 map.put("title", title.getText().toString());
                 map.put("content", content.getText().toString());
-                map.put("like", "00");
+                map.put("like", "0");
+
+                Log.d("보낸다", map.toString());
 
                 Call<Void> call = retrofitInterface.executePost(map);
 

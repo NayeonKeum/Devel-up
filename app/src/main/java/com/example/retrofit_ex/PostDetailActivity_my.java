@@ -30,8 +30,8 @@ public class PostDetailActivity_my extends AppCompatActivity {
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://172.10.18.137:80";
 
-    String name, title, content, like;
-    TextView Vname, Vtitle, Vcontent, Vlike;
+    String name, title, content;
+    TextView Vname, Vtitle, Vcontent;
     Button deleteBtn, updateBtn;
 
     @Override
@@ -43,19 +43,16 @@ public class PostDetailActivity_my extends AppCompatActivity {
         name = intent.getStringExtra("name");
         title = intent.getStringExtra("title");
         content = intent.getStringExtra("content");
-        like=intent.getStringExtra("like");
 
         Vname = findViewById(R.id.name);
         Vtitle = findViewById(R.id.title);
         Vcontent = findViewById(R.id.content);
-        Vlike=findViewById(R.id.like);
 
 
 
         Vname.setText("my name : " + name);
         Vtitle.setText("title : " + title);
         Vcontent.setText("content : \n" + content);
-        Vlike.setText("like : " + like);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

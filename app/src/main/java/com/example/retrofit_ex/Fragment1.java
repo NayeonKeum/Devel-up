@@ -89,13 +89,13 @@ public class Fragment1 extends Fragment {
                         }.getType());
 
                         for (int i = 0; i < list.size(); i++) {
-                            Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent(), list.get(i).getLike()));
+                            Postlist.add(new PostInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getContent()));
                         }
 
 
                         for (int i = 0; i < Postlist.size(); i++) {
                             if (name.equals(Postlist.get(i).getName())) {
-                                personalPostlist.add(new PostInfo(Postlist.get(i).getName(), Postlist.get(i).getTitle(), Postlist.get(i).getContent(), Postlist.get(i).getLike()));
+                                personalPostlist.add(new PostInfo(Postlist.get(i).getName(), Postlist.get(i).getTitle(), Postlist.get(i).getContent()));
                             }
                         }
 

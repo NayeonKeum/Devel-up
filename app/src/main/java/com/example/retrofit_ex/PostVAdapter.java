@@ -31,23 +31,19 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
     public MainActivity activity;
     int position;
     String userName;
-    boolean Isliked=false;
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://172.10.18.137:80";
-
 
     public void onAttach(Activity activity){
         this.activity= (MainActivity) activity;
     }
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name, title, content;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, title, content, like;
-        LinearLayout like_layout;
-        ImageView likeImg;
 
 
         public ViewHolder(View itemView) {
@@ -57,10 +53,9 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
             this.name = itemView.findViewById(R.id.name) ;
             this.title = itemView.findViewById(R.id.title);
             this.content = itemView.findViewById(R.id.content);
-            this.like=itemView.findViewById(R.id.like);
-            this.like_layout=itemView.findViewById(R.id.like_layout);
-            this.likeImg=itemView.findViewById(R.id.likeImg);
+
         }
+
     }
     public PostVAdapter(ArrayList<PostInfo> list, String userName) {
         this.mList = list ;
@@ -88,55 +83,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
         holder.name.setText(mList.get(position).getName()) ;
         holder.title.setText(mList.get(position).getTitle()) ;
         holder.content.setText(mList.get(position).getContent()) ;
-        holder.like.setText(mList.get(position).getLike());
 
-//        holder.like_layout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!Isliked){
-//
-//                    retrofit = new Retrofit.Builder()
-//                            .baseUrl(BASE_URL)
-//                            .addConverterFactory(GsonConverterFactory.create())
-//                            .build();
-//                    retrofitInterface = retrofit.create(RetrofitInterface.class);
-//
-//                    HashMap<String, String> map = new HashMap<>();
-//
-//                    map.put("name",  modal.getName());
-//                    map.put("title",  modal.getTitle());
-//                    map.put("content",  modal.getContent());
-//                    map.put("like", Integer.toString(Integer.parseInt(like)+1));
-//
-//                    likeImg.setColorFilter(Color.parseColor("#ff2e2e"), PorterDuff.Mode.SRC_IN);
-//
-//
-//                    Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
-//
-//                    call.enqueue(new Callback<UpdateResult>() {
-//                        @Override
-//                        public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
-//                            if (response.code() == 200) {
-//                                Toast.makeText(PostDetailActivity_my.this, "Liked!",
-//                                        Toast.LENGTH_LONG).show();
-//                            } else if (response.code() == 404) {
-//                                Toast.makeText(PostDetailActivity_my.this, "Somthings Wrong",
-//                                        Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<UpdateResult> call, Throwable t) {
-//                            Toast.makeText(PostDetailActivity_my.this, t.getMessage(),
-//                                    Toast.LENGTH_LONG).show();
-//                        }
-//                    });
-//
-//                }
-//                else {
-//                    Log.d("좋아요", "Already Liked!");
-//            }
-//        }});
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +97,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                     i.putExtra("name", modal.getName());
                     i.putExtra("title", modal.getTitle());
                     i.putExtra("content", modal.getContent());
-                    i.putExtra("like", modal.getLike());
                     //on below line we are starting a new activity,
                     holder.itemView.getContext().startActivity(i);
                 } else{
@@ -159,7 +105,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                     i.putExtra("name", modal.getName());
                     i.putExtra("title", modal.getTitle());
                     i.putExtra("content", modal.getContent());
-                    i.putExtra("like", modal.getLike());
                     //on below line we are starting a new activity,
                     holder.itemView.getContext().startActivity(i);
                 }
