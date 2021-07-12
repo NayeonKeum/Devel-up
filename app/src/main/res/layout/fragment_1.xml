@@ -25,11 +25,24 @@
         android:layout_height="3dp"
         android:background="#000000"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVContacts"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center_horizontal" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="bottom">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="myposts"
+            android:id="@+id/myposts"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="likedposts"
+            android:id="@+id/likedposts"
+            />
+    </LinearLayout>
 
 </LinearLayout>

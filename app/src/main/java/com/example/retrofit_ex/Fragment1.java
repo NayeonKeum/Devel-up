@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,8 +41,9 @@ public class Fragment1 extends Fragment {
 
     private RecyclerView per_postRV;
     private PostVAdapter postRVAdapter;
-    ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>(30);
-    ArrayList<PostInfo> personalPostlist=new ArrayList<PostInfo>(30);
+    ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>();
+    ArrayList<PostInfo> personalPostlist=new ArrayList<PostInfo>();
+    ArrayList<PostInfo> likedPostlist=new ArrayList<PostInfo>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,15 +99,52 @@ public class Fragment1 extends Fragment {
                             }
                         }
 
-                        ////////////////////////
-                        per_postRV = getView().findViewById(R.id.idRVContacts);
-                        //on below line we are setting layout mnager.
-                        per_postRV.setLayoutManager(new LinearLayoutManager(getContext()));
-                        per_postRV.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
+                        for (int i = 0; i < Postlist.size(); i++) {
+                            if (Postlist.get(i).getNamesofliked().contains(name)) {
+                                likedPostlist.add(new PostInfo(Postlist.get(i).getName(), Postlist.get(i).getTitle(), Postlist.get(i).getContent(), Postlist.get(i).getNamesofliked()));
+                            }
+                        }
 
-                        postRVAdapter = new PostVAdapter(personalPostlist, name);
-                        //on below line we are setting adapter to our recycler view.
-                        per_postRV.setAdapter(postRVAdapter);
+
+                        Button myposts=getView().findViewById(R.id.myposts);
+                        myposts.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                View view = getLayoutInflater().inflate(R.layout.f1_myposts, null);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setView(view).show();
+
+                                per_postRV = view.findViewById(R.id.idRVContacts);
+                                //on below line we are setting layout mnager.
+                                per_postRV.setLayoutManager(new LinearLayoutManager(getContext()));
+                                per_postRV.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
+
+                                postRVAdapter = new PostVAdapter(personalPostlist, name);
+                                //on below line we are setting adapter to our recycler view.
+                                per_postRV.setAdapter(postRVAdapter);
+                            }
+                        });
+
+                        Button likedposts=getView().findViewById(R.id.likedposts);
+                        likedposts.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                View view = getLayoutInflater().inflate(R.layout.f1_likedposts, null);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setView(view).show();
+
+                                per_postRV = view.findViewById(R.id.idRVContacts);
+                                //on below line we are setting layout mnager.
+                                per_postRV.setLayoutManager(new LinearLayoutManager(getContext()));
+                                per_postRV.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
+
+                                postRVAdapter = new PostVAdapter(likedPostlist, name);
+                                //on below line we are setting adapter to our recycler view.
+                                per_postRV.setAdapter(postRVAdapter);
+                            }
+                        });
 
 
                     } catch (IOException e) {
