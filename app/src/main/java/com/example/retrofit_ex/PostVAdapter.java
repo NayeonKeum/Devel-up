@@ -40,7 +40,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView) ;
-
             // 뷰 객체에 대한 참조. (hold strong reference)
             this.name = itemView.findViewById(R.id.name) ;
             this.title = itemView.findViewById(R.id.title);
@@ -79,12 +78,12 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
         holder.name.setText(modal.getName()) ;
         holder.title.setText(modal.getTitle()) ;
         holder.content.setText(modal.getContent()) ;
-
         namesofliked=modal.getNamesofliked();
         holder.like.setText(Integer.toString(namesofliked.size()-1));
 
         this.likeImg=holder.likeImg;
 
+        likeImg.setChecked(false);
         if (namesofliked.contains(userName)){
             likeImg.setChecked(true);
             Log.d("디폴트 들", userName+"  "+namesofliked);
