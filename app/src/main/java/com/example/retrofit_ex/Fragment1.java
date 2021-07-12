@@ -39,7 +39,7 @@ public class Fragment1 extends Fragment {
     private String BASE_URL = "http://172.10.18.137:80";
     String name;
 
-    private RecyclerView per_postRV;
+    private RecyclerView per_postRV1, per_postRV2;
     private PostVAdapter postRVAdapter;
     ArrayList<PostInfo> Postlist=new ArrayList<PostInfo>();
     ArrayList<PostInfo> personalPostlist=new ArrayList<PostInfo>();
@@ -115,14 +115,14 @@ public class Fragment1 extends Fragment {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                 builder.setView(view).show();
 
-                                per_postRV = view.findViewById(R.id.idRVContacts);
+                                per_postRV1 = view.findViewById(R.id.idRVContacts);
                                 //on below line we are setting layout mnager.
-                                per_postRV.setLayoutManager(new LinearLayoutManager(getContext()));
-                                per_postRV.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
+                                per_postRV1.setLayoutManager(new LinearLayoutManager(getContext()));
+                                per_postRV1.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
 
                                 postRVAdapter = new PostVAdapter(personalPostlist, name);
                                 //on below line we are setting adapter to our recycler view.
-                                per_postRV.setAdapter(postRVAdapter);
+                                per_postRV1.setAdapter(postRVAdapter);
                             }
                         });
 
@@ -135,14 +135,14 @@ public class Fragment1 extends Fragment {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                 builder.setView(view).show();
 
-                                per_postRV = view.findViewById(R.id.idRVContacts);
+                                per_postRV2 = view.findViewById(R.id.idRVContacts);
                                 //on below line we are setting layout mnager.
-                                per_postRV.setLayoutManager(new LinearLayoutManager(getContext()));
-                                per_postRV.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
+                                per_postRV2.setLayoutManager(new LinearLayoutManager(getContext()));
+                                per_postRV2.addItemDecoration(new DividerItemDecoration(getView().getContext(), 1));
 
                                 postRVAdapter = new PostVAdapter(likedPostlist, name);
                                 //on below line we are setting adapter to our recycler view.
-                                per_postRV.setAdapter(postRVAdapter);
+                                per_postRV2.setAdapter(postRVAdapter);
                             }
                         });
 
@@ -166,6 +166,7 @@ public class Fragment1 extends Fragment {
     public void onResume() {
         super.onResume();
         personalPostlist=new ArrayList<PostInfo>();
+        likedPostlist=new ArrayList<PostInfo>();
         Postlist=new ArrayList<PostInfo>();
     }
 }
