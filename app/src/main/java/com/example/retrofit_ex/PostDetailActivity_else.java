@@ -38,7 +38,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
     private RecyclerView rc;
 
     ArrayList<String> namesofliked;
-    String name, title, content;
+    String name, title, content,userName;
     TextView Vname, Vtitle, Vcontent, Vliked;
     EditText writeComment;
     Button commentBtn;
@@ -55,6 +55,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
         name=intent.getStringExtra("name");
         title=intent.getStringExtra("title");
         content=intent.getStringExtra("content");
+        userName=intent.getStringExtra("userName");
         namesofliked=intent.getStringArrayListExtra("namesofliked");
 
 
@@ -95,7 +96,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
         String comment=writeComment.getText().toString();
         Log.d("쓰기", comment);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("name", name);
+        map.put("name", userName);
         map.put("title", title);
         map.put("comment", comment);
 
@@ -122,7 +123,10 @@ public class PostDetailActivity_else extends AppCompatActivity {
     }
 
     private void setCommentRC() {
-        Call<ResponseBody> call = retrofitInterface.getComment();
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("title", title);
+        Call<ResponseBody> call = retrofitInterface.getComment(map);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -140,7 +144,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
                         List<CommentInfo> list = gson.fromJson(jsonString, new TypeToken<List<CommentInfo>>() {}.getType());
                         commentList = new ArrayList<CommentInfo>();
                         for (int i = 0; i < list.size(); i++) {
-                            commentList.add(new CommentInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getComment()));
+                            commentList.add(new CommentInfo(userName, list.get(i).getTitle(), list.get(i).getComment()));
                         }
                         ArrayList<CommentInfo> titlecommentList= new ArrayList<CommentInfo>();
                         for (int i = 0; i < commentList.size(); i++) {
@@ -154,7 +158,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
                         rc.setLayoutManager(new LinearLayoutManager(PostDetailActivity_else.this));
                         rc.addItemDecoration(new DividerItemDecoration(PostDetailActivity_else.this, 1));
 
-                        commentVAdapter = new CommentVAdapter(titlecommentList, name);
+                        commentVAdapter = new CommentVAdapter(titlecommentList, userName);
                         //on below line we are setting adapter to our recycler view.
                         rc.setAdapter(commentVAdapter);
 

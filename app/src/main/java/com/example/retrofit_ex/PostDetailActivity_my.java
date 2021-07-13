@@ -44,7 +44,7 @@ public class PostDetailActivity_my extends AppCompatActivity {
 
     private RecyclerView rc;
 
-    String name, title, content;
+    String name, title, content, userName;
     ArrayList<String> namesofliked;
     TextView Vname, Vtitle, Vcontent, Vliked;
     EditText writeComment;
@@ -63,6 +63,7 @@ public class PostDetailActivity_my extends AppCompatActivity {
         name = intent.getStringExtra("name");
         title = intent.getStringExtra("title");
         content = intent.getStringExtra("content");
+        userName=intent.getStringExtra("userName");
         namesofliked=intent.getStringArrayListExtra("namesofliked");
 
         Vname = findViewById(R.id.name);
@@ -85,7 +86,10 @@ public class PostDetailActivity_my extends AppCompatActivity {
     }
 
     private void setCommentRC() {
-        Call<ResponseBody> call = retrofitInterface.getComment();
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("title", title);
+        Call<ResponseBody> call = retrofitInterface.getComment(map);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -103,7 +107,7 @@ public class PostDetailActivity_my extends AppCompatActivity {
                         List<CommentInfo> list = gson.fromJson(jsonString, new TypeToken<List<CommentInfo>>() {}.getType());
                         commentList = new ArrayList<CommentInfo>();
                         for (int i = 0; i < list.size(); i++) {
-                            commentList.add(new CommentInfo(list.get(i).getName(), list.get(i).getTitle(), list.get(i).getComment()));
+                            commentList.add(new CommentInfo(userName, list.get(i).getTitle(), list.get(i).getComment()));
                         }
                         ArrayList<CommentInfo> titlecommentList= new ArrayList<CommentInfo>();
                         for (int i = 0; i < commentList.size(); i++) {
@@ -168,7 +172,7 @@ public class PostDetailActivity_my extends AppCompatActivity {
         String comment=writeComment.getText().toString();
         Log.d("쓰기", comment);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("name", name);
+        map.put("name", userName);
         map.put("title", title);
         map.put("comment", comment);
 

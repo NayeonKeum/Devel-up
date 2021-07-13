@@ -32,8 +32,8 @@ public interface RetrofitInterface {
     @POST("/post/update")
     Call<UpdateResult> executeUpdate (@Body HashMap<String, Object> map);
 
-    @GET("/comment/all")
-    Call<ResponseBody> getComment();
+    @POST("/comment/all")
+    Call<ResponseBody> getComment(@Body HashMap<String, Object> map);
 
     @POST("/comment/post")
     Call<Void> executeCommentPost (@Body HashMap<String, Object> map);

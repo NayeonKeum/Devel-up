@@ -152,6 +152,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                     i.putExtra("name", modal.getName());
                     i.putExtra("title", modal.getTitle());
                     i.putExtra("content", modal.getContent());
+                    i.putExtra("userName",userName);
                     i.putExtra("namesofliked", modal.getNamesofliked());
                     //on below line we are starting a new activity,
                     holder.itemView.getContext().startActivity(i);
@@ -161,6 +162,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                     i.putExtra("name", modal.getName());
                     i.putExtra("title", modal.getTitle());
                     i.putExtra("content", modal.getContent());
+                    i.putExtra("userName",userName);
                     i.putExtra("namesofliked", modal.getNamesofliked());
                     //on below line we are starting a new activity,
                     holder.itemView.getContext().startActivity(i);
