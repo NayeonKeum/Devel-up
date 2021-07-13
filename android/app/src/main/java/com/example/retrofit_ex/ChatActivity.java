@@ -51,7 +51,6 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
 
         name = getIntent().getStringExtra("name");
         initiateSocketConnection();
-
     }
 
     private void initiateSocketConnection() {

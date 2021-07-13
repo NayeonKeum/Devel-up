@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,7 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String pattern2 = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
+                if (!Pattern.matches(pattern2, emailEdit.getText().toString())){
+                    Toast.makeText(LoginActivity.this, "Unvalid Email", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 HashMap<String, String> map = new HashMap<>();
 
                 map.put("email", emailEdit.getText().toString());
@@ -125,7 +130,11 @@ public class LoginActivity extends AppCompatActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String pattern2 = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
+                if (!Pattern.matches(pattern2, emailEdit.getText().toString())){
+                    Toast.makeText(LoginActivity.this, "Unvalid Email", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 HashMap<String, String> map = new HashMap<>();
 
                 map.put("name", nameEdit.getText().toString());
