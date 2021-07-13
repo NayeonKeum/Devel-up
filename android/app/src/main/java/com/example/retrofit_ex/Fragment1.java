@@ -1,5 +1,6 @@
 package com.example.retrofit_ex;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -38,6 +40,7 @@ public class Fragment1 extends Fragment {
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://172.10.18.137:80";
     String name;
+    Button Signout;
 
     private RecyclerView per_postRV1, per_postRV2;
     private PostVAdapter postRVAdapter;
@@ -62,7 +65,54 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = layoutInflater.inflate(R.layout.fragment_1, container, false);
+        Signout=view.findViewById(R.id.Signout);
+        Signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Delete 선택").setMessage("정말 탈퇴하시겠습니까?");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("name", name);
+                        Log.d("회원 삭제", name);
+                        Call<Void> call = retrofitInterface.deleteUser(map);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(getActivity(),
+                                            "Deleted successfully, return to login", Toast.LENGTH_LONG).show();
+                                    Intent intent=new Intent(getContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                } else if (response.code() == 400) {
+                                    Toast.makeText(getActivity(),
+                                            "There's no such User", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Toast.makeText(getActivity(), "Cancel Click", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                }
+            });
+
         return view;
+
     }
 
     @Override

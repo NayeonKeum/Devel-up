@@ -42,6 +42,10 @@ public interface RetrofitInterface {
     Call<Void> deleteComment(
             @Body HashMap<String, String> map);
 
+    @HTTP(method = "DELETE", path = "/user/delete", hasBody = true)
+    Call<Void> deleteUser(
+            @Body HashMap<String, String> map);
+
 }
 
 

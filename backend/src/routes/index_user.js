@@ -52,4 +52,24 @@ module.exports=function(app, User)
         })
     });
 
+    app.delete("/user/delete", (req,res) =>{
+        const query = { name: req.body.name }
+
+        User.findOne(query, (err, result) => {
+            if (result == null) {
+                res.status(400).send()
+            } else {
+                User.deleteOne(query, function(err){
+                    if (err){
+                        console.error(err);
+                        return;
+                    }
+                    res.status(200).send()
+                })
+            }
+        })
+    });
+
+
+
 }
