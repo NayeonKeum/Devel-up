@@ -83,6 +83,7 @@ public class Fragment3 extends Fragment {
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showBtn.setVisibility(View.INVISIBLE);
 
                 Call<ResponseBody> call = retrofitInterface.getPost();
 

@@ -50,4 +50,14 @@
         android:id="@+id/pickImgBtn"
         android:layout_alignParentEnd="true"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        android:src="@drawable/like_y"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/sendBtn"
+        android:id="@+id/likeBtn"
+        />
+
 </RelativeLayout>

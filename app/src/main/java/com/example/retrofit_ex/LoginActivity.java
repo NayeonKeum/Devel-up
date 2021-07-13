@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,8 +89,9 @@ public class LoginActivity extends AppCompatActivity {
                             builder1.setMessage(result.getEmail());
 
                             builder1.show();
+
                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("name",result.getName());
+                            intent.putExtra("name", result.getName());
                             startActivity(intent);
 
                         } else if (response.code() == 404) {

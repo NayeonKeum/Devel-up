@@ -6,26 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-
-    <EditText
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/chatment"
+        android:id="@+id/chatment"
         android:layout_margin="16dp"
-        android:hint="Enter your name"
-        android:textSize="16sp"
-        android:id="@+id/editText"
-        android:background="@drawable/edittext_design"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editText"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:text="Enter room"
         android:textColor="#ffffff"
         android:background="@color/purple_700"
-        android:id="@+id/enterBtn"/>
+        android:id="@+id/enterBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

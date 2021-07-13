@@ -20,6 +20,7 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter {
 
+
     private static final int TYPE_MESSAGE_SENT = 0;
     private static final int TYPE_MESSAGE_RECEIVED = 1;
     private static final int TYPE_IMAGE_SENT = 2;
@@ -200,5 +201,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
         messages.add(jsonObject);
         notifyDataSetChanged();
     }
+
 
 }

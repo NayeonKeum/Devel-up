@@ -34,12 +34,11 @@ import java.io.InputStream;
 import static android.app.Activity.RESULT_OK;
 
 public class Fragment2 extends Fragment {
-
+    String name;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,16 +49,13 @@ public class Fragment2 extends Fragment {
                 != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
 
-
-        EditText editText = view.findViewById(R.id.editText);
-
+        name=((MainActivity)getActivity()).returnName();
+        Log.d("이름", name);
         view.findViewById(R.id.enterBtn)
                 .setOnClickListener(v -> {
-
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    intent.putExtra("name", editText.getText().toString());
+                    intent.putExtra("name", name);
                     startActivity(intent);
-
                 });
         return view;
     }

@@ -3,6 +3,7 @@ package com.example.retrofit_ex;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +25,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,7 +39,7 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
     private WebSocket webSocket;
     private String SERVER_PATH = "ws://172.10.18.137:443";
     private EditText messageEdit;
-    private View sendBtn, pickImgBtn;
+    private View sendBtn, pickImgBtn, likeBtn;
     private RecyclerView recyclerView;
     private int IMAGE_REQUEST_ID = 1;
     private MessageAdapter messageAdapter;
@@ -47,7 +50,6 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
         setContentView(R.layout.activity_chat);
 
         name = getIntent().getStringExtra("name");
-        //Log.d("액티비티 : ", "들어옴");
         initiateSocketConnection();
 
     }
@@ -57,7 +59,6 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(SERVER_PATH).build();
         webSocket = client.newWebSocket(request, new SocketListener());
-        //Log.d("서버 : ", "들어옴");
 
     }
 
@@ -79,6 +80,7 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
         if (string.isEmpty()) {
             resetMessageEdit();
         } else {
+
             sendBtn.setVisibility(View.VISIBLE);
             pickImgBtn.setVisibility(View.INVISIBLE);
         }
@@ -102,9 +104,8 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
         @Override
         public void onOpen(WebSocket webSocket, Response response) {
             super.onOpen(webSocket, response);
-            Log.d("소켓 : ", "들어옴");
+
             runOnUiThread(() -> {
-                Log.d("소켓 : ", "성공적");
                 Toast.makeText(ChatActivity.this,
                         "Socket Connection Successful!",
                         Toast.LENGTH_SHORT).show();
@@ -126,8 +127,7 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
 
                     messageAdapter.addItem(jsonObject);
 
-                    // 마지막에 더해진 리사이클러뷰로 화면이 이동
-                    recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);//0에서 시작하므로!
+                    recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -139,10 +139,10 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
     }
 
     private void initializeView() {
-
         messageEdit = findViewById(R.id.messageEdit);
         sendBtn = findViewById(R.id.sendBtn);
         pickImgBtn = findViewById(R.id.pickImgBtn);
+        likeBtn=findViewById(R.id.likeBtn);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -160,16 +160,11 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
                 jsonObject.put("name", name);
                 jsonObject.put("message", messageEdit.getText().toString());
 
-                Log.d("소켓 : ", "전송 전");
-
                 webSocket.send(jsonObject.toString());
-
-                Log.d("소켓 : ", "전송 후");
 
                 jsonObject.put("isSent", true);
                 messageAdapter.addItem(jsonObject);
 
-                // 커서 이동
                 recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
 
                 resetMessageEdit();
@@ -177,6 +172,36 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+        });
+        likeBtn.setOnClickListener(v -> {
+
+            Bitmap image  = BitmapFactory.decodeResource(getResources(), R.drawable.like_yw);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+
+            String base64String = Base64.encodeToString(outputStream.toByteArray(),
+                    Base64.DEFAULT);
+
+            JSONObject jsonObject = new JSONObject();
+
+            try {
+                jsonObject.put("name", name);
+                jsonObject.put("image", base64String);
+
+                webSocket.send(jsonObject.toString());
+
+                jsonObject.put("isSent", true);
+
+                messageAdapter.addItem(jsonObject);
+
+                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
         });
 
@@ -232,7 +257,6 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
 
             messageAdapter.addItem(jsonObject);
 
-            //커서 이동
             recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
 
         } catch (JSONException e) {
