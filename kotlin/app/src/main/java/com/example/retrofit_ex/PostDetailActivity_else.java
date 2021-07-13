@@ -34,7 +34,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     //    private String BASE_URL = "http://172.10.18.137:80";
-    private String BASE_URL = "http://192.249.18.137:80";
+    private String BASE_URL = "http://172.10.18.137:80";
 
     private RecyclerView rc;
 
@@ -54,6 +54,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
         setContentView(R.layout.f3_elseview);
         Intent intent=getIntent();
         name=intent.getStringExtra("name");
+        //System.out.println("주인 : "+name);
         title=intent.getStringExtra("title");
         content=intent.getStringExtra("content");
         userName=intent.getStringExtra("userName");
@@ -76,7 +77,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
                 .build();
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        setCommentRC();
+        setCommentRC(name);
     }
 
     @Override
@@ -122,7 +123,7 @@ public class PostDetailActivity_else extends AppCompatActivity {
         });
     }
 
-    private void setCommentRC() {
+    private void setCommentRC(String name) {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("title", title);
@@ -158,10 +159,10 @@ public class PostDetailActivity_else extends AppCompatActivity {
                         rc.setLayoutManager(new LinearLayoutManager(PostDetailActivity_else.this));
                         rc.addItemDecoration(new DividerItemDecoration(PostDetailActivity_else.this, 1));
 
-                        commentVAdapter = new CommentVAdapter(titlecommentList, userName);
+                        //Log.d("이름들", name+userName);  a(글 주인)/id1(내)
+                        commentVAdapter = new CommentVAdapter(titlecommentList, name);
                         //on below line we are setting adapter to our recycler view.
                         rc.setAdapter(commentVAdapter);
-
 
                     } catch (IOException e) {
                         e.printStackTrace();

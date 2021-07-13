@@ -40,7 +40,7 @@ public class Fragment1 extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
 //    private String BASE_URL = "http://172.10.18.137:80";
-    private String BASE_URL = "http://192.249.18.137:80";
+    private String BASE_URL = "http://172.10.18.137:80";
     String name;
     String email;
     Button Signout;

@@ -53,7 +53,7 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
         this.userName=userName;
 
 //        String BASE_URL = "http://172.10.18.137:80";
-        String BASE_URL = "http://192.249.18.137:80";
+        String BASE_URL = "http://172.10.18.137:80";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -95,7 +95,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
             public void onClick(View v) {
                 if (likeImg.isChecked()) {
                     Log.d("좋아요", "체크 됨, userName : "+userName+", name list :"+namesofliked.toString());
-
                     if (modal.getNamesofliked().contains(userName)) {
                         Toast.makeText(context, "이미 누른 좋아요 입니다.", Toast.LENGTH_LONG).show();
                         Log.d("좋아요","이미 누름");

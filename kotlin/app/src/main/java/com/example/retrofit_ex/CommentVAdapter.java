@@ -46,10 +46,9 @@ public class CommentVAdapter extends RecyclerView.Adapter<CommentVAdapter.ViewHo
     }
     public CommentVAdapter(ArrayList<CommentInfo> list, String userName) {
         this.mList = list ;
-        this.userName=userName;
+        this.userName=userName;//글 주인 이름
 
-//        String BASE_URL = "http://172.10.18.137:80";
-        String BASE_URL = "http://192.249.18.137:80";
+        String BASE_URL = "http://172.10.18.137:80";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -72,8 +71,9 @@ public class CommentVAdapter extends RecyclerView.Adapter<CommentVAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CommentInfo modal = mList.get(position);
-        Log.d("이름 두 개 ", userName+", "+modal.getName());
+
         if (userName.equals(modal.getName())){
+            System.out.println("이름 두 개 : "+userName+", "+modal.getName());
             holder.deleteBtn.setVisibility(View.VISIBLE);
             holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

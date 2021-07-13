@@ -41,7 +41,7 @@ public class PostDetailActivity_my extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
 //    private String BASE_URL = "http://172.10.18.137:80";
-    private String BASE_URL = "http://192.249.18.137:80";
+    private String BASE_URL = "http://172.10.18.137:80";
 
     private RecyclerView rc;
 
@@ -62,6 +62,7 @@ public class PostDetailActivity_my extends AppCompatActivity {
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
+        //System.out.println("주인 : "+name);
         title = intent.getStringExtra("title");
         content = intent.getStringExtra("content");
         userName=intent.getStringExtra("userName");
@@ -83,10 +84,10 @@ public class PostDetailActivity_my extends AppCompatActivity {
                 .build();
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        setCommentRC();
+        setCommentRC(name);
     }
 
-    private void setCommentRC() {
+    private void setCommentRC(String name) {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("title", title);
@@ -121,7 +122,7 @@ public class PostDetailActivity_my extends AppCompatActivity {
                         //on below line we are setting layout manger.
                         rc.setLayoutManager(new LinearLayoutManager(PostDetailActivity_my.this));
                         rc.addItemDecoration(new DividerItemDecoration(PostDetailActivity_my.this, 1));
-
+                        //Log.d("이제와서 이름", name);
                         commentVAdapter = new CommentVAdapter(titlecommentList, name);
                         //on below line we are setting adapter to our recycler view.
                         rc.setAdapter(commentVAdapter);

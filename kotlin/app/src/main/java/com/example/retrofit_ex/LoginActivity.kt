@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private var retrofitInterface: RetrofitInterface? = null
 
     //    private String BASE_URL = "http://172.10.18.137:80";
-    private val BASE_URL = "http://192.249.18.137:80"
+    private val BASE_URL = "http://172.10.18.137:80"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -24,7 +24,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
     private var webSocket: WebSocket? = null
 
     //    private String SERVER_PATH = "ws://172.10.18.137:443";
-    private val SERVER_PATH = "ws://192.249.18.137:443"
+    private val SERVER_PATH = "ws://172.10.18.137:443"
     private var messageEdit: EditText? = null
     private var sendBtn: View? = null
     private var pickImgBtn: View? = null

@@ -43,20 +43,29 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRVContacts"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:gravity="center_horizontal" />
 
-    <EditText
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Comment"
-        android:id="@+id/writeComment"/>
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="writeComment"
-        android:id="@+id/commentBtn"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comment"
+            android:id="@+id/writeComment"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="writeComment"
+            android:id="@+id/commentBtn"/>
+    </LinearLayout>
 
 </LinearLayout>
