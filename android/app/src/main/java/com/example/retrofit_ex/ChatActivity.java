@@ -54,26 +54,21 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
     }
 
     private void initiateSocketConnection() {
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(SERVER_PATH).build();
         webSocket = client.newWebSocket(request, new SocketListener());
-
     }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-
         String string = s.toString().trim();
 
         if (string.isEmpty()) {
@@ -87,7 +82,6 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
     }
 
     private void resetMessageEdit() {
-
         messageEdit.removeTextChangedListener(this);
 
         messageEdit.setText("");
@@ -95,11 +89,9 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
         pickImgBtn.setVisibility(View.VISIBLE);
 
         messageEdit.addTextChangedListener(this);
-
     }
 
     private class SocketListener extends WebSocketListener {
-
         @Override
         public void onOpen(WebSocket webSocket, Response response) {
             super.onOpen(webSocket, response);
