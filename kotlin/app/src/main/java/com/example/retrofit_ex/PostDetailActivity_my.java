@@ -99,9 +99,9 @@ public class PostDetailActivity_my extends AppCompatActivity {
                 //List<JSONObject> result= response.body();
                 //showPostResult
                 if (response.code() == 500) {
-                    Log.d("세상에", "database has failed");
+                    Toast.makeText(PostDetailActivity_my.this, "database has failed",Toast.LENGTH_LONG).show();
                 } else if (response.code() == 200) {
-                    Log.d("세상에", "Uploaded successfully");
+                    Toast.makeText(PostDetailActivity_my.this, "Uploaded successfully",Toast.LENGTH_LONG).show();
 
                     Gson gson = new Gson();
                     try {
@@ -131,10 +131,8 @@ public class PostDetailActivity_my extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("뭐", t.getMessage());

@@ -114,7 +114,6 @@ public class PostVAdapter extends RecyclerView.Adapter<PostVAdapter.ViewHolder> 
                         Log.d("해시 리스트 : ", map.toString());
                         Call<UpdateResult> call = retrofitInterface.executeUpdate(map);
 
-                        //여기까지 괜찮음!
                         call.enqueue(new Callback<UpdateResult>() {
                             @Override
                             public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {

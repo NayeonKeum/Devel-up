@@ -33,9 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PostDetailActivity_else extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    //    private String BASE_URL = "http://172.10.18.137:80";
     private String BASE_URL = "http://172.10.18.137:80";
-
     private RecyclerView rc;
 
     ArrayList<String> namesofliked;
@@ -45,7 +43,6 @@ public class PostDetailActivity_else extends AppCompatActivity {
     Button commentBtn, deleteBtn;
 
     private CommentVAdapter commentVAdapter;
-
     ArrayList<CommentInfo> commentList=new ArrayList<CommentInfo>();
 
     @Override
@@ -59,7 +56,6 @@ public class PostDetailActivity_else extends AppCompatActivity {
         content=intent.getStringExtra("content");
         userName=intent.getStringExtra("userName");
         namesofliked=intent.getStringArrayListExtra("namesofliked");
-
 
         Vname=findViewById(R.id.name);
         Vtitle=findViewById(R.id.title);
@@ -135,9 +131,9 @@ public class PostDetailActivity_else extends AppCompatActivity {
                 //List<JSONObject> result= response.body();
                 //showPostResult
                 if (response.code() == 500) {
-                    Log.d("세상에", "database has failed");
+                    Toast.makeText(PostDetailActivity_else.this, "database has failed",Toast.LENGTH_LONG).show();
                 } else if (response.code() == 200) {
-                    Log.d("세상에", "Uploaded successfully");
+                    Toast.makeText(PostDetailActivity_else.this, "Uploaded successfully",Toast.LENGTH_LONG).show();
 
                     Gson gson = new Gson();
                     try {
@@ -161,7 +157,6 @@ public class PostDetailActivity_else extends AppCompatActivity {
 
                         //Log.d("이름들", name+userName);  a(글 주인)/id1(내)
                         commentVAdapter = new CommentVAdapter(titlecommentList, name);
-                        //on below line we are setting adapter to our recycler view.
                         rc.setAdapter(commentVAdapter);
 
                     } catch (IOException e) {
@@ -169,7 +164,6 @@ public class PostDetailActivity_else extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("뭐", t.getMessage());
