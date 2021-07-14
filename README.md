@@ -21,7 +21,6 @@
   * NodeJS : v8.10.0
   * Ubuntu : 18.04.2
   * MongoDB : v3.6.3
-  * 
 
 
 # 
