@@ -4,8 +4,6 @@
 
 ## Team Mates : 최지호 금나연
 
-## Main Tabs / Navigation Bar
-
 ## Tab1 - 프로필
 
 * 로그인한 유저의 프로필 사항 기재
