@@ -47,7 +47,7 @@
 
 
 ### Tab1 - 프로필
-<img src="https://user-images.githubusercontent.com/72987121/125553531-33733d79-09d1-4413-a0bd-b62e6804bf83.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553543-7973e45e-75e0-49a6-9432-4d148ee1dc9b.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553527-bbb9a389-3077-4827-8e53-a9c7c892ef53.jpg" width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/72987121/125553531-33733d79-09d1-4413-a0bd-b62e6804bf83.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553527-bbb9a389-3077-4827-8e53-a9c7c892ef53.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553543-7973e45e-75e0-49a6-9432-4d148ee1dc9b.jpg" width=30% height=30%>
 
 <img src="https://user-images.githubusercontent.com/72987121/125553534-cc8e80b5-fd78-4773-8753-1726658ec4a6.jpg" width=30% height=30%>
 
@@ -68,9 +68,10 @@
 
 ### Tab3 - 커뮤니티
 
-<img src="https://user-images.githubusercontent.com/72987121/125553535-c28767c4-3fca-43ce-829a-c3022c34b5b8.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553524-f5da97d6-e3c7-45b6-8be7-6ee64bbccf62.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553545-7a15d627-77d6-41a7-a37a-89303a58f69c.jpg" width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/72987121/125553554-5e480db6-307d-4787-a322-91dde56fd288.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553535-c28767c4-3fca-43ce-829a-c3022c34b5b8.jpg" width=30% height=30%>    <img src="https://user-images.githubusercontent.com/72987121/125553555-2701c2c0-086c-4ca3-927c-564c78b4fa60.jpg" width=30% height=30%>
 
-<img src="https://user-images.githubusercontent.com/72987121/125553546-e28130ba-9abe-434c-8b6d-e8b52c33c661.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553554-5e480db6-307d-4787-a322-91dde56fd288.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553555-2701c2c0-086c-4ca3-927c-564c78b4fa60.jpg" width=30% height=30%>
+
+<img src="https://user-images.githubusercontent.com/72987121/125553545-7a15d627-77d6-41a7-a37a-89303a58f69c.jpg" width=30% height=30%>   <img src="https://user-images.githubusercontent.com/72987121/125553524-f5da97d6-e3c7-45b6-8be7-6ee64bbccf62.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553546-e28130ba-9abe-434c-8b6d-e8b52c33c661.jpg" width=30% height=30%>
 
 
 * 전체 게시글 열람
