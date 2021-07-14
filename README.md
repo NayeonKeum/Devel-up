@@ -59,7 +59,7 @@
 
 
 ### Tab2 - 채팅
-<img src="https://user-images.githubusercontent.com/72987121/125553556-47503729-04a1-4307-8c10-62753b46f3b6.jpg" width=30% height=30%>  
+<img src="https://user-images.githubusercontent.com/72987121/125553556-47503729-04a1-4307-8c10-62753b46f3b6.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125554616-1edf4fa5-11ee-4837-b95c-cb36aed51651.jpg" width=30% height=30%>  
 
 * 소켓을 활용한 실시간 채팅 서비스
 * 웹소켓을 사용하여 글, 이미지, 좋아요 아이콘 전송 가능
