@@ -15,6 +15,5 @@
 ## Tab3 - 커뮤니티
 
 * 게시글 작성, 수정, 코멘트, 좋아요 기능 
-
  
-
+<img src="https://user-images.githubusercontent.com/72987121/125553524-f5da97d6-e3c7-45b6-8be7-6ee64bbccf62.jpg" width=30% height=30%>
