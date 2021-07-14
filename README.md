@@ -41,7 +41,7 @@
 
 ### 스플래시 및 로그인 화면
 
-<img src="https://user-images.githubusercontent.com/72987121/125553552-1b3f0314-6a1e-47f7-af08-f4b4ca0b7839.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553552-1b3f0314-6a1e-47f7-af08-f4b4ca0b7839.jpg" width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/72987121/125556330-62e5f0c6-f993-4991-bc68-b3d830e8cc95.jpg" width=30% height=30%>  <img src="https://user-images.githubusercontent.com/72987121/125553552-1b3f0314-6a1e-47f7-af08-f4b4ca0b7839.jpg" width=30% height=30%>
 
 
 
