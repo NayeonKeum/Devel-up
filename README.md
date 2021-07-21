@@ -7,7 +7,7 @@
 
 
 
-## Team Mates : 최지호 금나연
+## Team Mates : 금나연 최지호
 
 
 
